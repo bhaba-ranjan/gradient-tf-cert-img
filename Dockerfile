@@ -1,9 +1,9 @@
 # docker.io/paperspace/tensorflow-python
 # 0.0.2
 
-FROM gcr.io/tensorflow/tensorflow:1.5.0-gpu
+# FROM gcr.io/tensorflow/tensorflow:1.5.0-gpu
 # Alternate pinned source:
-# FROM docker.io/paperspace/tensorflow:1.5.0-gpu
+FROM docker.io/paperspace/tensorflow:1.5.0-gpu
 
 RUN mv /usr/local/bin/pip /usr/local/bin/pip_2
 
@@ -11,15 +11,8 @@ RUN apt-get -y update && apt-get install -y python3-pip && pip3 install --upgrad
 
 RUN rm /usr/local/bin/pip && mv /usr/local/bin/pip_2 /usr/local/bin/pip
 
-RUN pip3 install \
-    pipenv \
-    paperspace
 
-RUN pip2 install \
-    pipenv \
-    paperspace
-
-RUN pip3 install \
+RUN pip install \
     tensorflow-gpu \
     jupyter \
     scikit-learn \
@@ -40,3 +33,7 @@ RUN pip3 install \
     singledispatch \
     webencodings
 
+EXPOSE 8888
+
+
+CMD ["bash", "-c", "source /etc/bash.bashrc && jupyter notebook --ip 0.0.0.0 --no-browser --allow-root"]
