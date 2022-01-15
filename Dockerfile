@@ -1,7 +1,7 @@
-# Use the FROM command to pull other images to base your new one on
+# Use the FROM instruction to pull other images to base your new one on
 FROM docker.io/paperspace/tensorflow:2.0.0-gpu-py3-jupyter-lab
 
-# Use RUN to make the image do a terminal command like behavior
+# Use the RUN instruction to make the image do a terminal command like behavior
 # Prevent conflicts with pip3
 RUN mv /usr/local/bin/pip /usr/local/bin/pip_2
 
@@ -14,7 +14,6 @@ RUN rm /usr/local/bin/pip && mv /usr/local/bin/pip_2 /usr/local/bin/pip
 # Some installs to facilitate the process.
 RUN pip install \
     tensorflow-gpu \
-    jupyter \ # <- # It's imperative that you install jupyter, in particular, to work with Gradient
     scikit-learn \
     scipy \
     sklearn \
@@ -33,6 +32,8 @@ RUN pip install \
     singledispatch \
     webencodings 
 
+#  It's imperative that you install jupyter, in particular, to work with Gradient
+RUN pip install jupyter 
 
 # Use wget to grab files of interest to have in the container
 RUN apt-get install -y wget
@@ -41,7 +42,10 @@ RUN apt-get install -y wget
 RUN wget https://raw.githubusercontent.com/gradient-ai/TensorFlow/main/quick_start_beginner.ipynb
 
 
+# Use EXPOSE to instruct the image to expose ports as needed
 EXPOSE 8888
 
 
+# The main purpose of a CMD is to provide defaults for an executing container
+# This CMD opens the jupyter notebook when you run the image
 CMD ["bash", "-c", "source /etc/bash.bashrc && jupyter notebook --ip 0.0.0.0 --no-browser --allow-root"]
