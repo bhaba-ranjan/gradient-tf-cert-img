@@ -3,7 +3,7 @@
 
 # FROM gcr.io/tensorflow/tensorflow:1.5.0-gpu
 # Alternate pinned source:
-FROM docker.io/paperspace/tensorflow:1.5.0-gpu
+FROM docker.io/paperspace/tensorflow:2.0.0-gpu-py3-jupyter-lab
 
 RUN mv /usr/local/bin/pip /usr/local/bin/pip_2
 
@@ -31,7 +31,12 @@ RUN pip install \
     pbr \
     scandir \
     singledispatch \
-    webencodings
+    webencodings 
+
+RUN apt-get install git
+
+RUN git clone https://github.com/gradient-ai/tensorflow
+
 
 EXPOSE 8888
 
