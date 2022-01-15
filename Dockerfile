@@ -33,9 +33,9 @@ RUN pip install \
     singledispatch \
     webencodings 
 
-RUN apt-get install git
+RUN apt-get install -y wget
 
-RUN git clone https://github.com/gradient-ai/tensorflow
+RUN wget https://raw.githubusercontent.com/gradient-ai/TensorFlow/main/quick_start_beginner.ipynb
 
 
 EXPOSE 8888
